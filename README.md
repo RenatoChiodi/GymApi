@@ -1,5 +1,6 @@
 # Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+Projeto para o desenvolvimento de uma WebAPI capaz de cadastrar Academidas e as pessoas envolvidas como instrutores e alunos.
+Neste projeto foi utilizado o framework AspNet 2.1 com a autenticação via JwtBearer.
 
 # Getting Started
 TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
