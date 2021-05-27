@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Cors.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,14 +35,19 @@ namespace GymLover.WebApi
                     );
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
+            services.AddMvc().ConfigureApiBehaviorOptions(opt =>
+            {
+                opt.InvalidModelStateResponseFactory = (_ => new BadRequestObjectResult("Invalid Call!"));
+            }
+            );
             services.Configure<MvcOptions>(options =>
             {
-                options.Filters.Add(new CorsAuthorizationFilterFactory("AllowSpecificOrigin"));
+                //options.Filters.Add(new CorsAuthorizationFilterFactory("AllowSpecificOrigin"));
             });
 
             services.AddDbContext<GymLoverDbContext>(opt =>
-               opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+               opt.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
 
             var signingConfigurations = new SigningConfigurations();
             services.AddSingleton(signingConfigurations);
@@ -99,6 +103,7 @@ namespace GymLover.WebApi
                 app.UseHsts();
             }
 
+
             app.UseCors("AllowSpecificOrigin");
 
             //app.UseCors(
@@ -106,10 +111,10 @@ namespace GymLover.WebApi
             //    .AllowAnyMethod()
             //    .AllowAnyHeader()
             //    );
-
-            app.UseHttpsRedirection()
-            .UseAuthentication()
-            .UseMvc();
+            //app.UseHttpsRedirection()
+            //.UseAuthentication()
+            //.UseMvc();
+            app.UseMvc();
         }
     }
 }
