@@ -30,7 +30,7 @@ namespace GymLover.Api
         {
 
             services.AddDbContext<GymLoverDbContext>(opt =>
-               opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+               opt.UseNpgsql(Configuration.GetConnectionString("HerokuPostgre")));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
