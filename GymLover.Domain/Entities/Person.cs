@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace GymLover.Domain
+namespace GymLover.Domain.Entities
 {
     public class Person
     {
@@ -19,8 +19,5 @@ namespace GymLover.Domain
         public string State { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public byte[] Image { get; set; }
-        public string Permission { get; set; }
-        public string LastAcess { get; set; }
     }
 }

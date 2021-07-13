@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GymLover.Domain
+namespace GymLover.Domain.Entities
 {
     public class Gym
     {

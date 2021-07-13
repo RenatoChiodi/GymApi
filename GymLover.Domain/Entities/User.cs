@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace GymLover.Domain
+namespace GymLover.Domain.Entities
 {
     public class User 
     {

@@ -1,4 +1,6 @@
 using GymLover.DataAccess.Context;
+using GymLover.Domain;
+using GymLover.Domain.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,13 +32,17 @@ namespace GymLover.Api
         {
 
             services.AddDbContext<GymLoverDbContext>(opt =>
-               opt.UseNpgsql(Configuration.GetConnectionString("HerokuPostgre")));
+               opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("GymLover.Api")));
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GymLover.Api", Version = "v1" });
             });
+
+            //Dependency Injection
+            services.AddSingleton<IPersonBusiness, PersonBusiness>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

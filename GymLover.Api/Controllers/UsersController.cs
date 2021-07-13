@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using GymLover.DataAccess.Context;
 using GymLover.Domain;
 using Microsoft.AspNetCore.Authorization;
+using GymLover.Domain.Entities;
 
 namespace GymLover.WebApi.Controllers
 {

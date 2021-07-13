@@ -1,13 +1,11 @@
-﻿using System;
+﻿using GymLover.DataAccess.Context;
+using GymLover.Domain.Entities;
+using GymLover.Domain.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using GymLover.DataAccess.Context;
-using GymLover.Domain;
-using Microsoft.AspNetCore.Authorization;
 
 namespace GymLover.WebApi.Controllers
 {
@@ -16,17 +14,19 @@ namespace GymLover.WebApi.Controllers
     public class PeopleController : ControllerBase
     {
         private readonly GymLoverDbContext _context;
+        private readonly IPersonBusiness _personBusiness;
 
-        public PeopleController(GymLoverDbContext context)
+        public PeopleController(GymLoverDbContext context, IPersonBusiness personBusiness)
         {
             _context = context;
+            _personBusiness = personBusiness;
         }
 
         // GET: api/People
         [HttpGet]
         public IEnumerable<Person> GetPerson()
         {
-            return _context.Person;
+            return _personBusiness.GetPeople();
         }
 
         // GET: api/People/5
@@ -38,7 +38,7 @@ namespace GymLover.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var person = await _context.Person.FindAsync(id);
+            var person = _personBusiness.GetPerson(id);
 
             if (person == null)
             {
@@ -62,11 +62,9 @@ namespace GymLover.WebApi.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(person).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                _personBusiness.EditPerson(person);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -92,8 +90,7 @@ namespace GymLover.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Person.Add(person);
-            await _context.SaveChangesAsync();
+            _personBusiness.IsertPerson(person);
 
             return CreatedAtAction("GetPerson", new { id = person.Id }, person);
         }
@@ -107,15 +104,14 @@ namespace GymLover.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var person = await _context.Person.FindAsync(id);
+            var person = _personBusiness.GetPerson(id);
             if (person == null)
             {
                 return NotFound();
             }
 
-            _context.Person.Remove(person);
-            await _context.SaveChangesAsync();
-
+            _personBusiness.DeletePerson(person);
+            
             return Ok(person);
         }
 
