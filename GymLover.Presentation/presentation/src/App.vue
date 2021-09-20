@@ -1,26 +1,25 @@
 <template>
   <v-app class="grey lighten-4">
-    <navbar />
-    <v-main>
-      <Home/>
-    </v-main>
+    <navbar :rotas="routes"/>
+    <transition name="pagina">
+      <router-view></router-view>
+    </transition>
   </v-app>
 </template>
 
 <script>
-import Home from './views/Home.vue'
 import Navbar from './components/Navbar.vue'
+import {routes} from './routes';
 
 export default {
   name: 'App',
 
   components: {
-    Home,
-    Navbar,
+    Navbar
   },
 
   data: () => ({
-    //
+   routes
   }),
 };
 </script>
