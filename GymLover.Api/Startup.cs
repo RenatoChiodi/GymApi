@@ -13,6 +13,7 @@ namespace GymLover.Api
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,6 +28,14 @@ namespace GymLover.Api
             services.AddDbContext<GymLoverDbContext>(opt =>
                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("GymLover.Api")));
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("http://localhost:8080");
+                                  });
+            });
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -49,6 +58,8 @@ namespace GymLover.Api
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseRouting();
 
