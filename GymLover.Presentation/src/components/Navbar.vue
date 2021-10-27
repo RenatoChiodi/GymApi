@@ -16,7 +16,7 @@
                     </v-list-item-action>
                     <v-list-item-content>
                         <v-list-item-title>
-                            <h3 class="font-weight-thin">Vuetify Dashboard</h3>
+                            <h3 class="font-weight-thin">Dashboard</h3>
                         </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
@@ -25,7 +25,7 @@
                 <v-list-item-avatar>
                     <v-icon>mdi-account-outline</v-icon>
                 </v-list-item-avatar>
-                <v-list-item-content class="text-truncate"> Jane Doeski </v-list-item-content>
+                <v-list-item-content class="text-truncate"> Renato Davi Chiodi </v-list-item-content>
                 <v-btn icon small>
                     <v-icon>mdi-chevron-left</v-icon>
                 </v-btn>
@@ -42,7 +42,7 @@
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
-        <v-content>
+        <v-main>
             <v-container class="px-4 py-0 fill-height" fluid>
                 <v-row class="fill-height">
                     <v-col>
@@ -52,9 +52,9 @@
                     </v-col>
                 </v-row>
             </v-container>
-        </v-content>
+        </v-main>
         <v-footer class="py-3">
-            <span class="ml-auto overline">Iatek &copy;2020</span>
+            <span class="ml-auto overline">Renato &copy;2021</span>
         </v-footer>
     </v-app>
 </div>
