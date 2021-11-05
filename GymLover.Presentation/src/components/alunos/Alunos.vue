@@ -113,7 +113,8 @@
         </v-dialog>
       </v-toolbar>
     </template>
-     <template v-slot:item="{ item }">
+     <template v-slot:item.actions="{ item }">
+    <!-- <template v-slot:[`item.actions`]="{ item }"> -->
      <v-icon
         small
         class="mr-2"
@@ -234,14 +235,14 @@ export default defineComponent({
     formTitle () {
         return this.editedIndex === -1 ? 'Novo Aluno' : 'Editar Aluno'
       },
-    //   watch: {
-    //   dialog (val) {
-    //     val || this.close()
-    //   },
-    //   dialogDelete (val) {
-    //     val || this.closeDelete()
-    //   },
-    // },
+      watch: {
+      dialog (val) {
+        val || this.close()
+      },
+      dialogDelete (val) {
+        val || this.closeDelete()
+      },
+    },
     
       headers () {
         return [
@@ -254,6 +255,7 @@ export default defineComponent({
           { text: 'Sobrenome', value: 'lastName' },
           { text: 'CPF', value: 'cpf' },
           { text: 'E-mail', value: 'email' },
+          { text: 'Actions', value: 'actions', sortable: false },
         ]
       },
     },
