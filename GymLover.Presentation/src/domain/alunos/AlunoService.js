@@ -16,12 +16,9 @@ export default class FotoService {
     }  
 
     cadastra(aluno) {
-
-        if(aluno._id) {
-
+        if(aluno.id) {
             return this._resource
-                .update({ id: aluno._id}, aluno);
-
+                .update({ id: aluno.id}, aluno);
         } else {
             return this._resource
                 .save(aluno);    
@@ -30,7 +27,6 @@ export default class FotoService {
     }
     
     apaga(id) {
-
         return this._resource
             .delete({ id })
             .then(null, err => {

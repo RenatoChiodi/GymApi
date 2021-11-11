@@ -3,7 +3,7 @@
     <h1>HomePage</h1>
     <div class="row">
       <div class="col-3">
-        <v-card elevation="12" href="/alunos"> Alunos 
+        <v-card elevation="12"> Alunos 
         </v-card>
       </div>
       <div class="col-3">

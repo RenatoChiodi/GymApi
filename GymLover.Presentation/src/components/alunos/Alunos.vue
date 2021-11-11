@@ -102,7 +102,7 @@
         </v-dialog>
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="text-h5">Tem certeza que deseja apagar este aluno?</v-card-title>
+            <v-card-title class="text-h6">Tem certeza que deseja apagar este aluno?</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="closeDelete">Cancelar</v-btn>
@@ -114,7 +114,6 @@
       </v-toolbar>
     </template>
      <template v-slot:item.actions="{ item }">
-    <!-- <template v-slot:[`item.actions`]="{ item }"> -->
      <v-icon
         small
         class="mr-2"
@@ -148,12 +147,14 @@ export default defineComponent({
       alunos: [],
       editedIndex: -1,
       editedItem: {
+        id: 0,
         name: '',
         lastName: '',
         cpf: '',
         email: '',
       },
       defaultItem: {
+        id: 0,
         name: '',
         lastName: '',
         cpf: '',
@@ -171,17 +172,6 @@ export default defineComponent({
 
   methods: {
 
-    remove(aluno) { 
-      this.service.apaga(aluno.id)
-        .then(()=> {
-          let indice = this.alunos.indexOf(aluno);
-          this.fotos.splice(indice, 1);
-          this.mensagem = 'Aluno removido com sucesso';
-        }, err => {
-          this.mensagem = err.message;
-        });
-    },
-
     filterOnlyCapsText (value, search) {
         return value != null &&
           search != null &&
@@ -196,13 +186,20 @@ export default defineComponent({
       },
 
       deleteItem (item) {
-        this.editedIndex = this.alunos.indexOf(item)
+        this.editedIndex = item
         this.editedItem = Object.assign({}, item)
         this.dialogDelete = true
       },
 
       deleteItemConfirm () {
-        this.alunos.splice(this.editedIndex, 1)
+       this.service.apaga(this.editedIndex.id)
+        .then(()=> {
+          let indice = this.alunos.indexOf(this.editedIndex);
+          this.alunos.splice(indice, 1);
+          this.mensagem = 'Aluno removido com sucesso';
+        }, err => {
+          this.mensagem = err.message;
+        });
         this.closeDelete()
       },
 
@@ -228,7 +225,15 @@ export default defineComponent({
         } else {
           this.alunos.push(this.editedItem)
         }
+        this.grava()
         this.close()
+      },
+
+      grava () {
+              this.service
+              .cadastra(this.editedItem)
+              .then(() => {
+            }, err => console.log(err));
       },
 },
   computed: {
@@ -246,6 +251,7 @@ export default defineComponent({
     
       headers () {
         return [
+          { text: 'Id', value: 'id' },
           {
             text: 'Nome',
             align: 'start',

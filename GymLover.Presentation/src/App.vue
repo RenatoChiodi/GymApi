@@ -2,7 +2,6 @@
   <v-app class="grey lighten-4">
     <navbar :rotas="routes"/>
     <transition name="pagina">
-     
     </transition>
   </v-app>
 </template>
