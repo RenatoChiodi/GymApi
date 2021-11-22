@@ -19,5 +19,6 @@ namespace GymLover.Domain.Entities
         public string State { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        public int PersonType { get; set; }
     }
 }

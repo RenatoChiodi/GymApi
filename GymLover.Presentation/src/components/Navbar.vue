@@ -89,6 +89,7 @@ export default defineComponent({
     items: [
         { title:"Home", href:"/", icon:"mdi-home-outline" },
         { title:"Alunos", href:"/alunos", icon:"mdi-account-search-outline" },
+        { title:"Avaliacao", href:"/avaliacao", icon:"mdi-heart-pulse" },
       ],
     drawer: true,
     group: null,

@@ -42,91 +42,12 @@
                     sm="6"
                     md="6"
                   >
-                    <v-text-field
-                      v-model="editedItem.name"
-                      label="Name"
-                    ></v-text-field>
+                    <datepicker 
+                      v-model="editedItem.date"
+                      label="Data"
+                    ></datepicker>
                   </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="6"
-                  >
-                    <v-text-field
-                      v-model="editedItem.lastName"
-                      label="Sobrenome"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="6"
-                  >
-                    <v-text-field
-                      v-model="editedItem.cpf"
-                      label="CPF"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="6"
-                  >
-                    <v-text-field
-                      v-model="editedItem.address"
-                      label="Endereço"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="6"
-                  >
-                    <v-text-field
-                      v-model="editedItem.neighbor"
-                      label="Bairro"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="6"
-                  >
-                    <v-text-field
-                      v-model="editedItem.city"
-                      label="Cidade"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="6"
-                  >
-                    <v-text-field
-                      v-model="editedItem.state"
-                      label="Estado"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="6"
-                  >
-                    <v-text-field
-                      v-model="editedItem.email"
-                      label="Email"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    sm="6"
-                    md="6"
-                  >
-                    <v-text-field
-                      v-model="editedItem.phone"
-                      label="Telefone"
-                    ></v-text-field>
-                  </v-col>
+                  
                 </v-row>
               </v-container>
             </v-card-text>
@@ -184,10 +105,14 @@
 <script>
 import { defineComponent } from '@vue/composition-api';
 import AlunoService from '../../domain/alunos/AlunoService';
+import Datepicker from 'vuejs-datepicker';
 
 export default defineComponent({
   setup() {
     
+  },
+  components: {
+    Datepicker
   },
   data() {
     return {
@@ -198,27 +123,11 @@ export default defineComponent({
       editedIndex: -1,
       editedItem: {
         id: 0,
-        name: '',
-        lastName: '',
-        address: '',
-        neighbor: '',
-        city: '',
-        state: '',
-        email: '',
-        cpf: '',
-        phone: '',
+        date: null,
       },
       defaultItem: {
        id: 0,
-        name: '',
-        lastName: '',
-        address: '',
-        neighbor: '',
-        city: '',
-        state: '',
-        email: '',
-        cpf: '',
-        phone: '',
+        date: null,
       },
     }
   },
@@ -256,7 +165,7 @@ export default defineComponent({
         .then(()=> {
           let indice = this.alunos.indexOf(this.editedIndex);
           this.alunos.splice(indice, 1);
-          this.mensagem = 'Aluno removido com sucesso';
+          this.mensagem = 'Avaliação removida com sucesso';
         }, err => {
           this.mensagem = err.message;
         });
@@ -280,13 +189,14 @@ export default defineComponent({
       },
 
       save () {
-        if (this.editedIndex > -1) {
-          Object.assign(this.alunos[this.editedIndex], this.editedItem)
-        } else {
-          this.alunos.push(this.editedItem)
-        }
-        this.grava()
-        this.close()
+          console.log(this.editedItem.date)
+        // if (this.editedIndex > -1) {
+        //   Object.assign(this.alunos[this.editedIndex], this.editedItem)
+        // } else {
+        //   this.alunos.push(this.editedItem)
+        // }
+        // this.grava()
+        // this.close()
       },
 
       grava () {
@@ -298,17 +208,9 @@ export default defineComponent({
 },
   computed: {
     formTitle () {
-        return this.editedIndex === -1 ? 'Novo Aluno' : 'Editar Aluno'
+        return this.editedIndex === -1 ? 'Novo Avaliação' : 'Editar Avaliação'
       },
-      watch: {
-      dialog (val) {
-        val || this.close()
-      },
-      dialogDelete (val) {
-        val || this.closeDelete()
-      },
-    },
-    
+          
       headers () {
         return [
           { text: 'Id', value: 'id' },
